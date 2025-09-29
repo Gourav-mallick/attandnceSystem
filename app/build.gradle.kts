@@ -64,9 +64,16 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
 
+    // Lifecycle
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
+
     // Retrofit + Gson
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+// OkHttp (last KitKat supported version)
+    implementation("com.squareup.okhttp3:okhttp:3.12.13")
+    implementation("com.squareup.okhttp3:logging-interceptor:3.12.13")
 }
 
 // Room schema export (optional but good practice)
@@ -75,4 +82,11 @@ kapt {
         arg("room.schemaLocation", "$projectDir/schemas")
     }
     correctErrorTypes = true
+}
+
+configurations.all {
+    resolutionStrategy {
+        force("com.squareup.okhttp3:okhttp:3.12.13")
+        force("com.squareup.okhttp3:logging-interceptor:3.12.13")
+    }
 }
