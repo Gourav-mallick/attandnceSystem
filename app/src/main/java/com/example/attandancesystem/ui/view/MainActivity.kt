@@ -11,6 +11,7 @@ import com.example.attandancesystem.data.api.ApiClient
 import com.example.attandancesystem.db.AppDatabase
 import com.example.attandancesystem.data.api.ApiService
 import com.example.attandancesystem.data.repository.InstituteRepository
+import com.example.attandancesystem.utils.DatabaseLogger
 import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: InstituteViewModel
@@ -30,6 +31,10 @@ class MainActivity : AppCompatActivity() {
         val api = ApiClient.retrofit.create(ApiService::class.java)
         val repo = InstituteRepository(api, db.institutesDao())
         viewModel = InstituteViewModel(repo)
+
+        // Call the logger to print institutes in log  just check waht data store in bd
+        DatabaseLogger.logInstitutes(db.institutesDao())
+        DatabaseLogger.logStudents(db.studentsDao())
 
         lifecycleScope.launch {
             viewModel.institutes.collect { list ->
